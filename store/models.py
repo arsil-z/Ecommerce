@@ -29,9 +29,25 @@ class Product(models.Model):
     name = models.CharField(max_length=200, null=True)
     price = models.FloatField()
     digital = models.BooleanField(default=False, null=True, blank=True)
-    # Image 
+    image = models.ImageField(null=True, blank=True)
+
     def __str__(self):
         return self.name
+
+    @property
+    def imageURL(self):
+
+        """ Since setting an image is set to null this can lead to error if the image is not
+            present and that error will not allow the whole page to load so we do try/except
+            for our url if that is not present we set that to empty so nothing is loaded on 
+            that page.
+        """
+        
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
 
 class Order(models.Model):
 
