@@ -64,6 +64,18 @@ class Order(models.Model):
     def __str__(self):
         return str(self.id)
 
+    @property
+    def get_cart_total(self):
+        orderItems = self.orderitem_set.all()
+        total = sum([item.get_total for item in orderItems])
+        return total
+
+    @property
+    def get_cart_items(self):
+        orderItems = self.orderitem_set.all()
+        total = sum([item.quantity for item in orderItems])
+        return total
+
 class OrderItem(models.Model):
 
     """ Using both the Models Product to know which product is ordered
@@ -76,6 +88,10 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=0, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def get_total(self):
+        total = self.product.price * self.quantity
+        return total
 
 class ShippingAddress(models.Model):
 
