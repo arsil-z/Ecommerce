@@ -43,6 +43,7 @@
         <br>
         <div class="box-element hidden" id="payment-info">
             <small>Paypal Options</small>
+			<button id="make-payment" class="btn btn-success">Make Payment</button>
         </div>
     </div>
     <div class="col-lg-6">
@@ -64,6 +65,21 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+	const shipping = "{{ order.shipping }}";
+	if (shipping == 'False') {
+		document.getElementById('shipping-info').innerHTML = '';
+	}
+	const form = document.getElementById('form');
+	form.addEventListener('submit', function(e) {
+		e.preventDefault();
+		console.log('Form Submitted....');
+		document.getElementById('form-button').classList.add('hidden');
+		document.getElementById('payment-info').classList.remove('hidden');
+	});
+
+</script>
 
 {% endblock content %}
 

@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 't18^&dfa=)0lx3(w7rkh1_2$06)gex5mz*r^)%kkt2z#4=*_!9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ecommerce-easy.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -40,6 +40,9 @@ INSTALLED_APPS = [
 
     # My apps
     'store.apps.StoreConfig',
+
+	# Storages For Django AWS
+	'storages',
 ]
 
 MIDDLEWARE = [
@@ -78,8 +81,12 @@ WSGI_APPLICATION = 'ecommerce_cart.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Ecommerce',
+		'USER': 'Ecommerce',
+		'PASSWORD': '9769560917',
+		'HOST': 'database-2.cjua47sevll8.ap-south-1.rds.amazonaws.com',
+		'PORT': '5432'
     }
 }
 
@@ -129,3 +136,15 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/images/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+
+
+AWS_ACCESS_KEY_ID = 'AKIASZTT2KYX6UBZXE7E'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'arsil-ecommerce-bucket'
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# AWS_S3_REGION_NAME = 'rds.ap-south-1b.amazonaws.com'

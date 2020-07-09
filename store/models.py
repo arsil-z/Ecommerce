@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class Customer(models.Model):
 
     """ Using the Pre Built Django Model User and connecting it
-        to OneToOneField, since each user can be assigned to only 
+        to OneToOneField, since each user can be assigned to only
         one customer Model.
     """
 
@@ -22,9 +22,9 @@ class Customer(models.Model):
 
 class Product(models.Model):
 
-    """ Using digital as a BooleanField because if the product is 
+    """ Using digital as a BooleanField because if the product is
         not digital then shipping process will be carried out.
-    
+
     """
 
     name = models.CharField(max_length=200, null=True)
@@ -39,7 +39,7 @@ class Product(models.Model):
     def imageURL(self):
         """ Since setting an image is set to null this can lead to error if the image is not
             present and that error will not allow the whole page to load so we do try/except
-            for our url if that is not present we set that to empty so nothing is loaded on 
+            for our url if that is not present we set that to empty so nothing is loaded on
             that page.
         """
 
@@ -52,7 +52,7 @@ class Product(models.Model):
 
 class Order(models.Model):
 
-    """ One customer can have multiple Orders so ForeignKey and when the customer 
+    """ One customer can have multiple Orders so ForeignKey and when the customer
         is deleted setting the value to NULL so that still the data is present about
         that order.
     """
@@ -65,6 +65,15 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    @property
+    def shipping(self):
+        shipping = False
+        orderItems = self.orderitem_set.all()
+        for item in orderItems:
+            if item.product.digital == False:
+                shipping = True
+        return shipping
 
     @property
     def get_cart_total(self):
